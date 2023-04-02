@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { Button, Container, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { deletePost, getPostById } from "../../../redux/postsRedux";
 
 const SinglePost = () => {
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { id } = useParams();
   const postData = useSelector(state => getPostById(state, id));
 
@@ -22,6 +23,11 @@ const SinglePost = () => {
     handleCloseModal();
   };
 
+  const handleEditPost  = (e) => {
+    e.preventDefault();
+    navigate(`/post/edit/${postData.id}`)
+  };
+
 
   if(!postData) return <Navigate to="/" />
     return (
@@ -29,7 +35,7 @@ const SinglePost = () => {
         <Container className="d-flex justify-content-between align-items-center mb-4">
           <h2>{postData.title}</h2>
           <div>
-            <Button href="/post/edit" variant="outline-info" className="me-2">Edit Post</Button>
+            <Button onClick={handleEditPost} variant="outline-info" className="me-2">Edit Post</Button>
             <Button onClick={handleShowModal} variant="outline-danger">Delete Post</Button>
           </div>
         </Container>

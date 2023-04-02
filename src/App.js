@@ -16,7 +16,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/post/add" element={<PostAdd />} />
-        <Route path="/post/edit" element={<PostEdit />} />
+        <Route path="/post/edit/:id" element={<PostEdit />} />
         <Route path="/post/:id" element={<SinglePost />} />
         <Route path="/about" element={<About />} />
         <Route path="*" element={<NoMatch />} />
