@@ -5,7 +5,6 @@ import { getAllPosts } from "../../../redux/postsRedux";
 import SinglePost from "../../pages/SinglePost/SinglePost";
 
 const Posts = () => {
-
   const posts = useSelector(getAllPosts);
 
   return (

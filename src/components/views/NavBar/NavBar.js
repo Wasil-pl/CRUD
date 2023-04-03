@@ -2,7 +2,6 @@ import { Container, Nav, Navbar } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 
 const NavBar = () => {
-
   return (
     <nav>
       <Navbar bg="primary" variant="dark" className="mt-4 mb-4 rounded nav-bar">

@@ -1,9 +1,8 @@
 import { Button, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import Posts from "../../features/PostsRender/PostsRender";
+import Posts from "../../features/Posts/Posts";
 
 const Home = () => {
-
   const navigate = useNavigate();
 
   const handleAddPost  = (e) => {

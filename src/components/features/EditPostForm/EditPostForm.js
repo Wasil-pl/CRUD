@@ -5,7 +5,6 @@ import { getPostById, editPost } from "../../../redux/postsRedux";
 import PostForm from "../PostForm/PostForm";
 
 const EditPostForm = () => {
-
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();

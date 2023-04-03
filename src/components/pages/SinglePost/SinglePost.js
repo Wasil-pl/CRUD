@@ -5,17 +5,16 @@ import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { deletePost, getPostById } from "../../../redux/postsRedux";
 
 const SinglePost = () => {
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
   const postData = useSelector(state => getPostById(state, id));
 
   // modal state
-  const [showModal, setShowModal] = useState(false);
+  const [showDeletePostModal, setshowDeletePostModal] = useState(false);
 
-  const handleCloseModal = () => setShowModal(false);
-  const handleShowModal = () => setShowModal(true);
+  const handleCloseModal = () => setshowDeletePostModal(false);
+  const handleShowModal = () => setshowDeletePostModal(true);
 
   const handleDeletePost  = (e) => {
     e.preventDefault();
@@ -43,7 +42,7 @@ const SinglePost = () => {
         <p>{postData.content}</p>
 
         {/* Modal dialog */}
-        <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal show={showDeletePostModal} onHide={handleCloseModal}>
           <Modal.Header closeButton>
             <Modal.Title>Are you sure?</Modal.Title>
           </Modal.Header>

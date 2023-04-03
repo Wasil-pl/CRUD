@@ -3,7 +3,6 @@ import { Button, Col, Form } from "react-bootstrap";
 import { isValidDate } from "../../../utils/isValidDate";
 
 const PostForm = ({ pageTitle, action, actionText, ...props }) => {
-
   const [title, setTitle] = useState(props.title || '');
   const [author, setAuthor] = useState(props.author || '');
   const [publishedDate, setpublishedDate] = useState(props.publishedDate || '');
