@@ -1,14 +1,13 @@
-
-import { useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { getPostById, editPost } from "../../../redux/postsRedux";
-import PostForm from "../PostForm/PostForm";
+import { useNavigate, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getPostById, editPost } from '../../../redux/postsRedux';
+import PostForm from '../PostForm/PostForm';
 
 const EditPostForm = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const post = useSelector(state => getPostById(state, id));
+  const post = useSelector((state) => getPostById(state, id));
 
   const handleSubmit = (post) => {
     dispatch(editPost({ ...post, id }));
@@ -21,9 +20,9 @@ const EditPostForm = () => {
 
   return (
     <PostForm
-      pageTitle={'Edit Post'}
+      pageTitle='Edit Post'
       action={handleSubmit}
-      actionText={'Update Post'}
+      actionText='Update Post'
       title={post.title}
       author={post.author}
       publishedDate={post.publishedDate}
