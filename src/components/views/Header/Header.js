@@ -1,4 +1,4 @@
-import NavBar from "../NavBar/NavBar";
+import NavBar from '../NavBar/NavBar';
 
 const Header = () => {
   return (
@@ -8,4 +8,4 @@ const Header = () => {
   );
 };
 
-  export default Header;
+export default Header;

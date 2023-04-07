@@ -1,4 +1,4 @@
-import EditPostForm from "../../features/EditPostForm/EditPostForm";
+import EditPostForm from '../../features/EditPostForm/EditPostForm';
 
 const PostEdit = () => {
   return (
@@ -9,4 +9,4 @@ const PostEdit = () => {
   );
 };
 
-  export default PostEdit;
+export default PostEdit;

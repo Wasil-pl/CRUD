@@ -26,20 +26,20 @@ const SinglePost = () => {
     navigate(`/post/edit/${postData.id}`);
   };
 
-  if (!postData) return <Navigate to='/' />;
+  if (!postData) return <Navigate to="/" />;
   return (
     <div>
-      <Container className='d-flex justify-content-between align-items-center mb-4'>
+      <Container className="d-flex justify-content-between align-items-center mb-4">
         <h2>{postData.title}</h2>
         <div>
           <Button
             onClick={handleEditPost}
-            variant='outline-info'
-            className='me-2'
+            variant="outline-info"
+            className="me-2"
           >
             Edit Post
           </Button>
-          <Button onClick={handleShowModal} variant='outline-danger'>
+          <Button onClick={handleShowModal} variant="outline-danger">
             Delete Post
           </Button>
         </div>

@@ -1,4 +1,4 @@
- export const isValidDate = (date) => {
+export const isValidDate = (date) => {
   const pattern = /^\d{2}-\d{2}-\d{4}$/;
   if (!pattern.test(date)) {
     return false;

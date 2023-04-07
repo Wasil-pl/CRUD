@@ -1,5 +1,5 @@
-import { Container } from "react-bootstrap";
-import AddPostForm from "../../features/AddPostForm/AddPostForm";
+import { Container } from 'react-bootstrap';
+import AddPostForm from '../../features/AddPostForm/AddPostForm';
 
 const PostAdd = () => {
   return (
@@ -10,4 +10,4 @@ const PostAdd = () => {
   );
 };
 
-  export default PostAdd;
+export default PostAdd;
