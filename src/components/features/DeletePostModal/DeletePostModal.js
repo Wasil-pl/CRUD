@@ -1,8 +1,8 @@
 import { Button, Modal } from "react-bootstrap";
 
-const DeletePostModal = ({ showDeletePostModal, handleCloseModal, handleDeletePost }) => {
+const DeletePostModal = ({ show, onClose, onConfirmDeletePost }) => {
   return (
-    <Modal show={showDeletePostModal} onHide={handleCloseModal}>
+    <Modal show={show} onHide={onClose}>
       <Modal.Header closeButton>
         <Modal.Title>Are you sure?</Modal.Title>
       </Modal.Header>
@@ -11,10 +11,10 @@ const DeletePostModal = ({ showDeletePostModal, handleCloseModal, handleDeletePo
         <p>Are you sure you want to do that?</p>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={handleCloseModal}>
+        <Button variant="secondary" onClick={onClose}>
           Cancel
         </Button>
-        <Button variant="danger" onClick={handleDeletePost}>
+        <Button variant="danger" onClick={onConfirmDeletePost}>
           Delete Post
         </Button>
       </Modal.Footer>

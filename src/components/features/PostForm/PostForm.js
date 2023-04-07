@@ -5,8 +5,8 @@ import { isValidDate } from '../../../utils/isValidDate';
 const PostForm = ({ pageTitle, action, actionText, ...props }) => {
   const [title, setTitle] = useState(props.title || '');
   const [author, setAuthor] = useState(props.author || '');
-  const [publishedDate, setpublishedDate] = useState(props.publishedDate || '');
-  const [publishedDateError, setPublishedDateError] = useState(null);
+  const [handlePublishedDateChange, setHandlePublishedDateChange] = useState(props.publishedDate || '');
+  const [handlePublishedDateChangeError, setHandlePublishedDateChangeError] = useState(null);
   const [shortDescription, setShortDescription] = useState(
     props.shortDescription || ''
   );
@@ -14,18 +14,18 @@ const PostForm = ({ pageTitle, action, actionText, ...props }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!isValidDate(publishedDate)) {
+    if (!isValidDate(handlePublishedDateChange)) {
       alert(
         'Invalid date format. Please enter a date in the format dd-mm-yyyy.'
       );
       return;
     }
-    action({ title, author, publishedDate, shortDescription, content });
+    action({ title, author, handlePublishedDateChange, shortDescription, content });
   };
 
   const onChange = (e) => {
-    setpublishedDate(e.target.value);
-    setPublishedDateError(
+    setHandlePublishedDateChange(e.target.value);
+    setHandlePublishedDateChangeError(
       isValidDate(e.target.value)
         ? null
         : 'Invalid date format. Please enter a date in the format dd-mm-yyyy.'
@@ -59,12 +59,12 @@ const PostForm = ({ pageTitle, action, actionText, ...props }) => {
         <Form.Control
           type='text'
           placeholder='Enter date: dd-mm-rrrr'
-          value={publishedDate}
+          value={handlePublishedDateChange}
           onChange={onChange}
-          isInvalid={publishedDateError !== null}
+          isInvalid={handlePublishedDateChangeError !== null}
         />
         <Form.Control.Feedback type='invalid'>
-          {publishedDateError}
+          {handlePublishedDateChangeError}
         </Form.Control.Feedback>
       </Form.Group>
 

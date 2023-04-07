@@ -16,7 +16,7 @@ const SinglePost = () => {
   const handleCloseModal = () => setShowDeletePostModal(false);
   const handleShowModal = () => setShowDeletePostModal(true);
 
-  const handleDeletePost = (e) => {
+  const onConfirmDeletePost = (e) => {
     e.preventDefault();
     dispatch(deletePost(id));
     handleCloseModal();
@@ -48,9 +48,9 @@ const SinglePost = () => {
       <p>{postData.content}</p>
 
       <DeletePostModal
-        showDeletePostModal={showDeletePostModal}
-        handleCloseModal={handleCloseModal}
-        handleDeletePost={handleDeletePost}
+        show={showDeletePostModal}
+        onClose={handleCloseModal}
+        handleDeletePost={onConfirmDeletePost}
       />
     </div>
   );
