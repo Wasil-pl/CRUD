@@ -4,6 +4,7 @@ export const isValidDate = (date) => {
     return false;
   }
   const [day, month, year] = date.split('-');
+  const maxDaysInMonth = new Date(year, month, 0).getDate();
   const dateObj = new Date(`${year}-${month}-${day}`);
-  return dateObj instanceof Date && !isNaN(dateObj);
+  return dateObj instanceof Date && !isNaN(dateObj) && day <= maxDaysInMonth;
 };

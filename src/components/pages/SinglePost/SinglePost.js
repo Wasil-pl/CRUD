@@ -32,11 +32,7 @@ const SinglePost = () => {
       <Container className="d-flex justify-content-between align-items-center mb-4">
         <h2>{postData.title}</h2>
         <div>
-          <Button
-            onClick={handleEditPost}
-            variant="outline-info"
-            className="me-2"
-          >
+          <Button onClick={handleEditPost} variant="outline-info" className="me-2">
             Edit Post
           </Button>
           <Button onClick={handleShowModal} variant="outline-danger">
@@ -45,13 +41,8 @@ const SinglePost = () => {
         </div>
       </Container>
       <p>Author: {postData.author}</p>
-      <p>{postData.content}</p>
-
-      <DeletePostModal
-        show={showDeletePostModal}
-        onClose={handleCloseModal}
-        handleDeletePost={onConfirmDeletePost}
-      />
+      <p dangerouslySetInnerHTML={{ __html: postData.content }} />
+      <DeletePostModal show={showDeletePostModal} onClose={handleCloseModal} handleDeletePost={onConfirmDeletePost} />
     </div>
   );
 };
