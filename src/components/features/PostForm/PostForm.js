@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { Button, Col, Form } from 'react-bootstrap';
 import { isValidDate } from '../../../utils/isValidDate';
-import Errors from '../Errors/Errors';
+import { DateError, Errors, InvalidDateFormatError, MainContentError } from '../Errors/Errors';
 import ReactQuill from 'react-quill';
 import { useForm } from 'react-hook-form';
 import 'react-quill/dist/quill.snow.css';
+import PropTypes from 'prop-types';
 
 const PostForm = ({ pageTitle, action, actionText, ...props }) => {
   const [title, setTitle] = useState(props.title || '');
@@ -20,8 +21,6 @@ const PostForm = ({ pageTitle, action, actionText, ...props }) => {
     formState: { errors },
   } = useForm();
 
-  const invalidDateFormatError = 'Invalid date format. Please enter a date in the format dd-mm-yyyy.';
-
   const handleSubmit = () => {
     setContentError(!content);
     setPublishedDateError(!publishedDate);
@@ -32,7 +31,7 @@ const PostForm = ({ pageTitle, action, actionText, ...props }) => {
 
   const handlePublishedDateChange = (e) => {
     setPublishedDate(e.target.value);
-    setPublishedDateError(isValidDate(e.target.value) ? null : invalidDateFormatError);
+    setPublishedDateError(isValidDate(e.target.value) ? null : InvalidDateFormatError);
   };
 
   return (
@@ -70,10 +69,8 @@ const PostForm = ({ pageTitle, action, actionText, ...props }) => {
           onChange={handlePublishedDateChange}
           isInvalid={publishedDateError !== null}
         />
+        {publishedDateError && <DateError publishedDateError={publishedDateError} />}
         <Form.Control.Feedback type="invalid">{publishedDateError}</Form.Control.Feedback>
-        {publishedDateError && (
-          <small className="d-block form-text text-danger mt-2">Published date can't be empty</small>
-        )}
       </Form.Group>
 
       <Form.Group controlId="shortDescription" as={Col} md="10" className="mb-3">
@@ -96,7 +93,7 @@ const PostForm = ({ pageTitle, action, actionText, ...props }) => {
           value={content}
           onChange={(value) => setContent(value)}
         />
-        {contentError && <small className="d-block form-text text-danger mt-2">Main Content can't be empty</small>}
+        {contentError && <MainContentError contentError={contentError} />}
       </Form.Group>
 
       <Button variant="primary" type="submit">
@@ -104,6 +101,17 @@ const PostForm = ({ pageTitle, action, actionText, ...props }) => {
       </Button>
     </Form>
   );
+};
+
+PostForm.propTypes = {
+  pageTitle: PropTypes.string.isRequired,
+  action: PropTypes.func.isRequired,
+  actionText: PropTypes.string.isRequired,
+  title: PropTypes.string,
+  author: PropTypes.string,
+  publishedDate: PropTypes.string,
+  shortDescription: PropTypes.string,
+  content: PropTypes.string,
 };
 
 export default PostForm;
