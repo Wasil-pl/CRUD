@@ -2,8 +2,9 @@ import shortid from 'shortid';
 
 //selectors
 export const getAllPosts = (state) => state.posts;
-export const getPostById = ({ posts }, postId) =>
-  posts.find((post) => post.id === postId);
+export const getAllCategories = (state) => state.categories;
+export const getPostById = ({ posts }, postId) => posts.find((post) => post.id === postId);
+export const getPostsByCategory = ({ posts }, category) => posts.filter((posts) => posts.category === category);
 
 // actions
 export const deletePost = (payload) => ({ type: DELETE_POST, payload });
@@ -16,7 +17,7 @@ const ADD_POST = createActionName('ADD_POST');
 const EDIT_POST = createActionName('EDIT_POST');
 
 // action creators
-const postsReducer = (statePart = [], action) => {
+export const postsReducer = (statePart = [], action) => {
   switch (action.type) {
     case DELETE_POST:
       return statePart.filter((post) => post.id !== action.payload);
@@ -34,4 +35,9 @@ const postsReducer = (statePart = [], action) => {
   }
 };
 
-export default postsReducer;
+export const categoriesReducer = (statePart = [], action) => {
+  switch (action.type) {
+    default:
+      return statePart;
+  }
+};

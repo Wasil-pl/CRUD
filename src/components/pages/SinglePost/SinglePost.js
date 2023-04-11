@@ -22,7 +22,7 @@ const SinglePost = () => {
     handleCloseModal();
   };
 
-  const handleEditPost = (e) => {
+  const handleEditPost = () => {
     navigate(`/post/edit/${postData.id}`);
   };
 
@@ -40,7 +40,18 @@ const SinglePost = () => {
           </Button>
         </div>
       </Container>
-      <p>Author: {postData.author}</p>
+      <p>
+        <span className="fw-bold">Author: </span>
+        {postData.author}
+      </p>
+      <p>
+        <span className="fw-bold">Published Date: </span>
+        {postData.publishedDate}
+      </p>
+      <p>
+        <span className="fw-bold">Category: </span>
+        {postData.category}
+      </p>
       <p dangerouslySetInnerHTML={{ __html: postData.content }} />
       <DeletePostModal show={showDeletePostModal} onClose={handleCloseModal} handleDeletePost={onConfirmDeletePost} />
     </div>

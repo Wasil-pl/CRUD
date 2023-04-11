@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Button, Modal } from 'react-bootstrap';
 
 const DeletePostModal = ({ show, onClose, onConfirmDeletePost }) => {
@@ -20,6 +21,12 @@ const DeletePostModal = ({ show, onClose, onConfirmDeletePost }) => {
       </Modal.Footer>
     </Modal>
   );
+};
+
+DeletePostModal.propTypes = {
+  show: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  onConfirmDeletePost: PropTypes.func.isRequired,
 };
 
 export default DeletePostModal;

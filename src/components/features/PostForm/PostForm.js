@@ -6,12 +6,15 @@ import ReactQuill from 'react-quill';
 import { useForm } from 'react-hook-form';
 import 'react-quill/dist/quill.snow.css';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
+import { getAllCategories } from '../../../redux/postsRedux';
 
 const PostForm = ({ pageTitle, action, actionText, ...props }) => {
   const [title, setTitle] = useState(props.title || '');
   const [author, setAuthor] = useState(props.author || '');
   const [publishedDate, setPublishedDate] = useState(props.publishedDate || '');
   const [publishedDateError, setPublishedDateError] = useState(null);
+  const [category, setCategory] = useState(props.category || '');
   const [shortDescription, setShortDescription] = useState(props.shortDescription || '');
   const [content, setContent] = useState(props.content || '');
   const [contentError, setContentError] = useState(false);
@@ -20,12 +23,13 @@ const PostForm = ({ pageTitle, action, actionText, ...props }) => {
     handleSubmit: validate,
     formState: { errors },
   } = useForm();
+  const categories = useSelector(getAllCategories);
 
   const handleSubmit = () => {
     setContentError(!content);
     setPublishedDateError(!publishedDate);
     if (content && publishedDate) {
-      action({ title, author, publishedDate, shortDescription, content });
+      action({ title, author, publishedDate, category, shortDescription, content });
     }
   };
 
@@ -45,7 +49,7 @@ const PostForm = ({ pageTitle, action, actionText, ...props }) => {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
-        <Errors errors={errors.title} minLength={3} title={'Title'} />
+        <Errors errors={errors.title} minLength="3" title="Title" />
       </Form.Group>
 
       <Form.Group controlId="author" as={Col} md="4" className="mb-3">
@@ -57,7 +61,7 @@ const PostForm = ({ pageTitle, action, actionText, ...props }) => {
           value={author}
           onChange={(e) => setAuthor(e.target.value)}
         />
-        <Errors errors={errors.author} minLength={3} title={'Author'} />
+        <Errors errors={errors.author} minLength="3" title="Author" />
       </Form.Group>
 
       <Form.Group controlId="published" as={Col} md="4" className="mb-3">
@@ -73,6 +77,19 @@ const PostForm = ({ pageTitle, action, actionText, ...props }) => {
         <Form.Control.Feedback type="invalid">{publishedDateError}</Form.Control.Feedback>
       </Form.Group>
 
+      <Form.Group controlId="categories" as={Col} md="4" className="mb-3">
+        <Form.Label>categories</Form.Label>
+        <Form.Select
+          {...register('category', { required: true })}
+          onChange={(e) => setCategory(e.target.value)}
+          value={category}
+        >
+          {categories.map((category) => (
+            <option key={category}>{category}</option>
+          ))}
+        </Form.Select>
+      </Form.Group>
+
       <Form.Group controlId="shortDescription" as={Col} md="10" className="mb-3">
         <Form.Label>Short Description</Form.Label>
         <Form.Control
@@ -82,7 +99,7 @@ const PostForm = ({ pageTitle, action, actionText, ...props }) => {
           value={shortDescription}
           onChange={(e) => setShortDescription(e.target.value)}
         />
-        <Errors errors={errors.shortDescription} minLength={20} title={'Short Description'} />
+        <Errors errors={errors.shortDescription} minLength="20" title="Short Description" />
       </Form.Group>
 
       <Form.Group controlId="mainContent" as={Col} md="10" className="mb-3">
@@ -112,6 +129,7 @@ PostForm.propTypes = {
   publishedDate: PropTypes.string,
   shortDescription: PropTypes.string,
   content: PropTypes.string,
+  category: PropTypes.string,
 };
 
 export default PostForm;
