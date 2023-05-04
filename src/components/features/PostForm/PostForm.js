@@ -49,7 +49,7 @@ const PostForm = ({ pageTitle, action, actionText, ...props }) => {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
-        <Errors errors={errors.title} minLength="3" title="Title" />
+        <Errors errors={errors.title} minLength={3} title="Title" />
       </Form.Group>
 
       <Form.Group controlId="author" as={Col} md="4" className="mb-3">
@@ -61,7 +61,7 @@ const PostForm = ({ pageTitle, action, actionText, ...props }) => {
           value={author}
           onChange={(e) => setAuthor(e.target.value)}
         />
-        <Errors errors={errors.author} minLength="3" title="Author" />
+        <Errors errors={errors.author} minLength={3} title="Author" />
       </Form.Group>
 
       <Form.Group controlId="published" as={Col} md="4" className="mb-3">
@@ -84,10 +84,12 @@ const PostForm = ({ pageTitle, action, actionText, ...props }) => {
           onChange={(e) => setCategory(e.target.value)}
           value={category}
         >
+          <option>Choose Option</option>
           {categories.map((category) => (
             <option key={category}>{category}</option>
           ))}
         </Form.Select>
+        <Errors errors={category} title="Category" category={category} />
       </Form.Group>
 
       <Form.Group controlId="shortDescription" as={Col} md="10" className="mb-3">
@@ -99,7 +101,6 @@ const PostForm = ({ pageTitle, action, actionText, ...props }) => {
           value={shortDescription}
           onChange={(e) => setShortDescription(e.target.value)}
         />
-        <Errors errors={errors.shortDescription} minLength="20" title="Short Description" />
       </Form.Group>
 
       <Form.Group controlId="mainContent" as={Col} md="10" className="mb-3">

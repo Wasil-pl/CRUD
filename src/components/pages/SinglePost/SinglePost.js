@@ -53,7 +53,11 @@ const SinglePost = () => {
         {postData.category}
       </p>
       <p dangerouslySetInnerHTML={{ __html: postData.content }} />
-      <DeletePostModal show={showDeletePostModal} onClose={handleCloseModal} handleDeletePost={onConfirmDeletePost} />
+      <DeletePostModal
+        show={showDeletePostModal}
+        onClose={handleCloseModal}
+        onConfirmDeletePost={onConfirmDeletePost}
+      />
     </div>
   );
 };

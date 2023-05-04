@@ -1,9 +1,12 @@
 import PropTypes from 'prop-types';
 
-export const Errors = ({ errors, minLength, title }) => {
+export const Errors = ({ errors, minLength, title, category }) => {
   return (
     errors && (
       <>
+        {category === 'Choose Option' && (
+          <small className="d-block form-text text-danger mt-2">Please select a option</small>
+        )}
         {errors.type === 'required' && (
           <small className="d-block form-text text-danger mt-2">This field is required</small>
         )}
