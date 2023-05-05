@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { Button, Col, Form } from 'react-bootstrap';
 import { isValidDate } from '../../../utils/isValidDate';
-import { DateError, Errors, InvalidDateFormatError, MainContentError } from '../Errors/Errors';
 import ReactQuill from 'react-quill';
 import { useForm } from 'react-hook-form';
 import 'react-quill/dist/quill.snow.css';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { getAllCategories } from '../../../redux/postsRedux';
+import { Error, errorMessages } from '../ErrorMessages/ErrorMessages';
 
 const PostForm = ({ pageTitle, action, actionText, ...props }) => {
   const [title, setTitle] = useState(props.title || '');
@@ -17,7 +17,7 @@ const PostForm = ({ pageTitle, action, actionText, ...props }) => {
   const [category, setCategory] = useState(props.category || '');
   const [shortDescription, setShortDescription] = useState(props.shortDescription || '');
   const [content, setContent] = useState(props.content || '');
-  const [contentError, setContentError] = useState(false);
+  const [contentError, setContentError] = useState(null);
   const {
     register,
     handleSubmit: validate,
@@ -35,7 +35,12 @@ const PostForm = ({ pageTitle, action, actionText, ...props }) => {
 
   const handlePublishedDateChange = (e) => {
     setPublishedDate(e.target.value);
-    setPublishedDateError(isValidDate(e.target.value) ? null : InvalidDateFormatError);
+    const errorMessage = !e.target.value
+      ? errorMessages.required
+      : isValidDate(e.target.value)
+      ? null
+      : errorMessages.dateFormat;
+    setPublishedDateError(errorMessage);
   };
 
   return (
@@ -43,25 +48,31 @@ const PostForm = ({ pageTitle, action, actionText, ...props }) => {
       <Form.Group controlId="title" as={Col} md="4" className="mb-3">
         <Form.Label>Title</Form.Label>
         <Form.Control
-          {...register('title', { required: true, minLength: 3 })}
+          {...register('title', {
+            required: errorMessages.required,
+            minLength: { value: 3, message: errorMessages.minLength(3) },
+          })}
           type="text"
           placeholder="Enter title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
-        <Errors errors={errors.title} minLength={3} title="Title" />
+        {errors.title && <Error>{errors.title.message}</Error>}
       </Form.Group>
 
       <Form.Group controlId="author" as={Col} md="4" className="mb-3">
         <Form.Label>Author</Form.Label>
         <Form.Control
-          {...register('author', { required: true, minLength: 3 })}
+          {...register('author', {
+            required: errorMessages.required,
+            minLength: { value: 3, message: errorMessages.minLength(3) },
+          })}
           type="text"
           placeholder="Enter author"
           value={author}
           onChange={(e) => setAuthor(e.target.value)}
         />
-        <Errors errors={errors.author} minLength={3} title="Author" />
+        {errors.author && <Error>{errors.author.message}</Error>}
       </Form.Group>
 
       <Form.Group controlId="published" as={Col} md="4" className="mb-3">
@@ -73,14 +84,16 @@ const PostForm = ({ pageTitle, action, actionText, ...props }) => {
           onChange={handlePublishedDateChange}
           isInvalid={publishedDateError !== null}
         />
-        {publishedDateError && <DateError publishedDateError={publishedDateError} />}
-        <Form.Control.Feedback type="invalid">{publishedDateError}</Form.Control.Feedback>
+        {publishedDateError && <Error>{publishedDateError}</Error>}
       </Form.Group>
 
       <Form.Group controlId="categories" as={Col} md="4" className="mb-3">
         <Form.Label>categories</Form.Label>
         <Form.Select
-          {...register('category', { required: true })}
+          {...register('category', {
+            required: errorMessages.selectCategory,
+            validate: (value) => value !== 'Choose Option' || errorMessages.selectCategory,
+          })}
           onChange={(e) => setCategory(e.target.value)}
           value={category}
         >
@@ -89,18 +102,22 @@ const PostForm = ({ pageTitle, action, actionText, ...props }) => {
             <option key={category}>{category}</option>
           ))}
         </Form.Select>
-        <Errors errors={category} title="Category" category={category} />
+        {errors.category && <Error>{errors.category.message}</Error>}
       </Form.Group>
 
       <Form.Group controlId="shortDescription" as={Col} md="10" className="mb-3">
         <Form.Label>Short Description</Form.Label>
         <Form.Control
-          {...register('shortDescription', { required: true, minLength: 20 })}
+          {...register('shortDescription', {
+            required: errorMessages.required,
+            minLength: { value: 20, message: errorMessages.minLength(20) },
+          })}
           type="text"
           placeholder="Leave a short desciption here..."
           value={shortDescription}
           onChange={(e) => setShortDescription(e.target.value)}
         />
+        {errors.shortDescription && <Error>{errors.shortDescription.message}</Error>}
       </Form.Group>
 
       <Form.Group controlId="mainContent" as={Col} md="10" className="mb-3">
@@ -111,7 +128,7 @@ const PostForm = ({ pageTitle, action, actionText, ...props }) => {
           value={content}
           onChange={(value) => setContent(value)}
         />
-        {contentError && <MainContentError contentError={contentError} />}
+        {contentError && <Error>{errorMessages.enterInput}</Error>}
       </Form.Group>
 
       <Button variant="primary" type="submit">
